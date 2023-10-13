@@ -26,6 +26,9 @@ function NavBar() {
           <NavLink to="/signup">Signup</NavLink>
         </li>
         <li>
+          <NavLink to="/shortUrl">Short URL</NavLink>
+        </li>
+        <li>
           <NavLink to="/forgot-password">Forgot Password</NavLink>
         </li>
         <li>
