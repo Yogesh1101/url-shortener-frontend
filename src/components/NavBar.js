@@ -8,7 +8,7 @@ function NavBar() {
     /* The nav contains all the required details like link names, menu icon and a title */
     <nav>
       <Link to="/" className="title">
-        Password Reset Task
+        URL Shortener Task
       </Link>
       <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
         <span></span>
