@@ -1,77 +1,142 @@
 import { Button, TextField, Typography } from "@mui/material";
+import { useFormik } from "formik";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
+import * as yup from "yup";
+
+const formValidationSchema = yup.object({
+  email: yup
+    .string()
+    .email("Email must be a valid Email")
+    .required("Why not? Fill the Email"),
+  password: yup
+    .string()
+    .min(4, "Atleast 4 characters required")
+    .max(10, "Too many characters")
+    .required("Why not? Fill the Password"),
+});
 
 // This Login Component
 function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: formValidationSchema,
+    onSubmit: (values) => {
+      loginUser(values);
+    },
+  });
+
+  const loginUser = (user) => {
+    fetch("https://url-shortener-backend-ab7t.onrender.com/user/login", {
+      method: "POST",
+      body: JSON.stringify(user),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setLoading(false);
+        if (data.token) {
+          setErr("");
+          localStorage.setItem("token", data.token);
+          navigate("/shortUrl");
+          alert("Login Successful.");
+        } else {
+          setErr(data.error);
+        }
+      });
+  };
+
   // Here, once the user click on login button and the checking the user is exists or not
   // with the use of database
-  const handleLogin = async () => {
-    const payload = {
-      email,
-      password,
-    };
-    const res = await fetch("https://url-shortener-backend-ab7t.onrender.com/user/login", {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await res.json();
-    if (data.token) {
-      setErr("");
-      localStorage.setItem("token", data.token);
-      navigate("/");
-      alert("Login Successful.");
-    } else {
-      setErr(data.error);
-    }
-  };
+  // const handleLogin = async () => {
+  //   const payload = {
+  //     email,
+  //     password,
+  //   };
+  //   const res = await fetch(
+  //     "https://url-shortener-backend-ab7t.onrender.com/user/login",
+  //     {
+  //       method: "POST",
+  //       body: JSON.stringify(payload),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   );
+  //   const data = await res.json();
+  //   if (data.token) {
+  //     setErr("");
+  //     localStorage.setItem("token", data.token);
+  //     navigate("/");
+  //     alert("Login Successful.");
+  //   } else {
+  //     setErr(data.error);
+  //   }
+  // };
   return (
-    <div className="container login-div">
+    <form
+      className="container mt-5 w-100 signup-div gap-2"
+      onSubmit={formik.handleSubmit}
+    >
       <h1>LOGIN</h1>
+
       <TextField
-        sx={{ maxWidth: "500px" }}
         fullWidth
+        id="email"
+        name="email"
+        value={formik.values.email}
         type="email"
-        value={email}
-        id="outlined-basic"
-        variant="outlined"
         label="Email"
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
       />
+      <div className="w-100 err-div">
+        {formik.touched.email && formik.errors.email ? (
+          <p>{formik.errors.email}</p>
+        ) : (
+          ""
+        )}
+      </div>
       <TextField
-        sx={{ maxWidth: "500px", marginTop: "30px" }}
         fullWidth
+        id="password"
+        name="password"
+        value={formik.values.password}
         type="password"
-        value={password}
-        id="outlined-basic"
-        variant="outlined"
         label="Password"
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
       />
-      <Link to="/forgot-password" className="mt-3 cursor-pointer">Forgot Password ?</Link>
-      {err ? (
+      <div className="w-100 err-div">
+        {formik.touched.password && formik.errors.password ? (
+          <p>{formik.errors.password}</p>
+        ) : (
+          ""
+        )}
+      </div>
+      {loading ? (
+        <ClipLoader size={50} color={"green"} loading={loading} />
+      ) : (
         <Typography className="mt-3" color={"error"}>
           {err}
         </Typography>
-      ) : (
-        ""
       )}
       <Button
-        size="large"
-        className="mt-3"
+        type="submit"
         variant="contained"
-        onClick={handleLogin}
+        onClick={() => setLoading(true)}
       >
-        LOGIN
+        SUBMIT
       </Button>
-    </div>
+    </form>
   );
 }
 
