@@ -17,30 +17,30 @@ function Home() {
         <br></br>
         <b>2. The Task Work Flow</b>
         <br></br>
-        <b>-{">"} </b>Login with your email and password.<br></br>
-        <b>-{">"} </b>If the user is not exist Signup with your email and
-        password to create. The Email Activation link is sent to your email
-        provided.<br></br>
-        <b>-{">"} </b>Click the link and click the button to activate the email
-        and it redirect to login page.<br></br>
-        <b>-{">"} </b>After successful of Signup, Login with same email and
-        password.<br></br>
-        <b>-{">"} </b>If the user password is incorrect and cannot remember.
-        Click on Forgot Password option in Login Page.<br></br>
-        <b>-{">"} </b>In the Forgot Password page, Enter your email and submit.
-        A reset password link will be sent to your email.
+        <b>-{">"} </b>Read this work flow for your reference.<br></br>
+        <b>-{">"} </b>Go to Login Page, Login with email and password<br></br>
+        <b>-{">"} </b>If the user is not exists, Create user in the signup page
+        with all given details.<br></br>
+        <b>-{">"} </b>A Activation Link will be sent to the given email and
+        click the link in email to activate the account.<br></br>
+        <b>-{">"} </b>Once after activation, login with the same email and
+        password. Note - Only the activated users only can able to login.
         <br></br>
-        <b>-{">"} </b>Open your email and click on the link and it navigates to
-        another page.
-        <br></br>
-        <b>-{">"} </b>There type your new password and re-enter the new password
-        to conform and submit.
-        <br></br>
-        <b>-{">"} </b>The new password is updated and now user can login with
-        email and updated password.<br></br>
-        <b>-{">"} </b>After Login it redirect to URL Shortener page where you
-        can enter long URL and it provide a short URL which is used to direct
-        the same page where the long url directs.
+        <b>-{">"} </b>If the user can't remember the password use Forgot
+        Password Option to reset the password.<br></br>
+        <b>-{">"} </b>Enter your email in the Forgot Password page and a link is
+        sent to the given email.<br></br>
+        <b>-{">"} </b>Once the link is clicked, it verifies the user and
+        redirect to reset password page.<br></br>
+        <b>-{">"} </b>Enter the new password and conform password. The new
+        password is updated and now the user can able to login with the same
+        email and new password.<br></br>
+        <b>-{">"} </b>After only the Success of login it redirects to the URL
+        Shortener Page where user can enter the long url.<br></br>
+        <b>-{">"} </b>It auto generates a short URL Link which is used to
+        navigate to the same page of long URL.<br></br>
+        <b>-{">"} </b>It also shows the number of clicks when the user clicked
+        the short URL.<br></br>
       </p>
     </div>
   );
